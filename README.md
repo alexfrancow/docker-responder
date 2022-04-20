@@ -15,4 +15,7 @@ docker run -p 80:80 -p 443:443 -p 445:445 -it responder
 
 ```bash
 kubectl apply -f 05-az-ns.yml  10-az-svc.yml  15-az-deploy.yml
+
+# Get public IP
+kubectl get svc --namespace=pentesting
 ```
