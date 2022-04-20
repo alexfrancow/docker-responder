@@ -1,0 +1,29 @@
+# Service
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: responder-svc
+  namespace: pentesting
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+  labels:
+    app: responder
+spec:
+  selector:
+    app: responder
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 443
+    protocol: TCP
+  - name: smb
+    port: 445
+    targetPort: 445
+    protocol: TCP

@@ -1,0 +1,40 @@
+# Deploy
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: responder
+  namespace: pentesting
+  labels:
+    app: responder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     app: responder
+  template:
+    metadata:
+      labels:
+        app: responder
+    spec:
+      tolerations:
+      - key: node.kubernetes.io/unreachable
+        operator: Exists
+        effect: NoExecute
+        tolerationSeconds: 20
+      - key: node.kubernetes.io/not-ready
+        operator: Exists
+        effect: NoExecute
+        tolerationSeconds: 20
+      containers:
+      - name: responder
+        image: alexfrancow/responder
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 445
+          name: smb
+        - containerPort: 443
+          name: https
